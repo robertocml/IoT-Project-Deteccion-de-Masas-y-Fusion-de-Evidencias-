@@ -70,7 +70,7 @@ test_set["Predictions"] = Y_pred
 cm = confusion_matrix(Y_test, Y_pred)
 accuracy = float(cm.diagonal().sum())/len(Y_test)
 
-print("\nAccuracy Of SVM: ", Y_test, "\n")
+print("\nAccuracy Of SVM: ", accuracy, "\n")
 
 
 # Estos prints los habia hecho para checar que el train set y el test set si fueran diferentes (poque da 1.0 el accuracy)
