@@ -5,6 +5,8 @@ from scipy.stats import kurtosis
 from sklearn.metrics import confusion_matrix
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 # inicializacion de las variables
@@ -72,11 +74,34 @@ accuracy = float(cm.diagonal().sum())/len(Y_test)
 
 print("\nAccuracy Of SVM: ", accuracy, "\n")
 
-
 # Estos prints los habia hecho para checar que el train set y el test set si fueran diferentes (poque da 1.0 el accuracy)
 # print(training_set)
 # print("-----------------------")
 # print(test_set)
+
+# ---------------------------------- Clasificacion de instancias usando una Weighted KNN-------------------------------#
+classifier = KNeighborsClassifier(n_neighbors=3)
+classifier.fit(X_train, Y_train)
+
+Y_pred = classifier.predict(X_test)
+
+test_set["Predictions"] = Y_pred
+
+cm = confusion_matrix(Y_test, Y_pred)
+accuracy = float(cm.diagonal().sum())/len(Y_test)
+
+print("\nAccuracy Of WKNN: ", accuracy, "\n")
+
+# ---------------------------------- Clasificacion de instancias usando una Random Forest-------------------------------#
+classifier = RandomForestClassifier(
+    n_estimators=100, max_depth=2, random_state=0)
+
+classifier.fit(X_train, Y_train)
+
+Y_pred = classifier.predict(X_test)
+
+
+print(classifier.feature_importances_)
 
 
 # Referencias:
