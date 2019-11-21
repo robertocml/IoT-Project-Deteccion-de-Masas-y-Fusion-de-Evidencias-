@@ -110,6 +110,12 @@ classifier.fit(X_train, Y_train)
 
 Y_pred = classifier.predict(X_test)
 
+test_set["Predictions"] = Y_pred
+
+cm = confusion_matrix(Y_test, Y_pred)
+accuracy = float(cm.diagonal().sum())/len(Y_test)
+
+print("\nAccuracy Of RF: ", accuracy, "\n")
 
 print(classifier.feature_importances_)
 
