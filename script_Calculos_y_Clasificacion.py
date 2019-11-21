@@ -86,7 +86,7 @@ print("\nAccuracy Of SVM: ", accuracy, "\n")
 
 # Estos prints los habia hecho para checar que el train set y el test set si fueran diferentes (poque da 1.0 el accuracy)
 # print(training_set)
-# print("-----------------------")
+
 # print(test_set)
 
 # ---------------------------------- Clasificacion de instancias usando una Weighted KNN-------------------------------#
