@@ -1,3 +1,4 @@
+
 import numpy as np
 import pandas as pd
 from sklearn import svm
@@ -15,42 +16,51 @@ altitud = np.zeros(0)
 humedad = np.zeros(0)
 temperatura = np.zeros(0)
 
+count = 1
+
 # For loop para recorrer el csv con intervalos de 10 renglones y generar los calculos
-for data in pd.read_csv("Sesion23sep2019.csv", usecols=[
+for data in pd.read_csv("Sensado_GYM_Completo.csv", usecols=[
         "Presion", "Altitud", "Humedad", "Temperatura"], chunksize=10):
     # Calculos de la presion
     presion = data["Presion"].values
     presion = presion[np.logical_not(np.isnan(presion))]
-    presionMean = presion.mean()
-    presionStd = np.std(presion)
-    presionKrt = kurtosis(presion)
 
-    # Calculos de la altitud
-    altitud = data["Altitud"].values
-    altitud = altitud[np.logical_not(np.isnan(altitud))]
-    altitudMean = altitud.mean()
-    altitudStd = np.std(altitud)
-    altitudKrt = kurtosis(altitud)
+    count = count + 1
 
-    # Calculos de la humedad
-    humedad = data["Humedad"].values
-    humedad = humedad[np.logical_not(np.isnan(humedad))]
-    humedadMean = humedad.mean()
-    humedadStd = np.std(humedad)
-    humedadKrt = kurtosis(humedad)
+    if presion.any():
+        print('**', presion)
+        presionMean = presion.mean()
+        presionStd = np.std(presion)
+        presionKrt = kurtosis(presion)
 
-    # Calculos de la temperatura
-    temperatura = data["Temperatura"].values
-    temperatura = temperatura[np.logical_not(np.isnan(temperatura))]
-    temperaturaMean = temperatura.mean()
-    temperaturaStd = np.std(temperatura)
-    temperaturaKrt = kurtosis(temperatura)
+        # Calculos de la altitud
+        altitud = data["Altitud"].values
+        altitud = altitud[np.logical_not(np.isnan(altitud))]
+        altitudMean = altitud.mean()
+        altitudStd = np.std(altitud)
+        altitudKrt = kurtosis(altitud)
+
+        # Calculos de la humedad
+        humedad = data["Humedad"].values
+        humedad = humedad[np.logical_not(np.isnan(humedad))]
+        humedadMean = humedad.mean()
+        humedadStd = np.std(humedad)
+        humedadKrt = kurtosis(humedad)
+
+        # Calculos de la temperatura
+        temperatura = data["Temperatura"].values
+        temperatura = temperatura[np.logical_not(np.isnan(temperatura))]
+        temperaturaMean = temperatura.mean()
+        temperaturaStd = np.std(temperatura)
+        temperaturaKrt = kurtosis(temperatura)
+    else:
+        print("something is null")
 
 
 # ---------------------------------- Clasificacion de instancias usando una SVM-------------------------------#
 
 
-df = pd.read_csv("Sesion23sep2019.csv", usecols=[
+df = pd.read_csv("Sensado_GYM_Completo.csv", usecols=[
                  "Presion", "Altitud", "Humedad", "Temperatura", "Ocupacion"])
 df = df.dropna()
 training_set, test_set = train_test_split(df, test_size=0.2, random_state=1)
